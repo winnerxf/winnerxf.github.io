@@ -1,0 +1,183 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>南昌大学软件学院小组展示</title><meta name="author" content="暴躁破防组"><meta name="copyright" content="暴躁破防组"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta property="og:type" content="website">
+<meta property="og:title" content="南昌大学软件学院小组展示">
+<meta property="og:url" content="http://example.com/index.html">
+<meta property="og:site_name" content="南昌大学软件学院小组展示">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/butterfly-icon.png">
+<meta property="article:author" content="暴躁破防组">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/butterfly-icon.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '南昌大学软件学院小组展示',
+  isHighlightShrink: false,
+  isToc: false,
+  pageType: 'home'
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="web_bg" style="background-image: url(https://s2.loli.net/2025/05/16/sD5ci3hlua6q8rd.jpg);"></div><div class="page" id="body-wrap"><header class="full_page" id="page-header" style="background: transparent;"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">南昌大学软件学院小组展示</span></a></span><div id="menus"></div></nav><div id="site-info"><h1 id="site-title">南昌大学软件学院小组展示</h1><div id="site-subtitle"><span id="subtitle"></span></div></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout hide-aside" id="content-inner"><div class="recent-posts nc" id="recent-posts"><div class="recent-post-items"><div class="recent-post-item"><div class="post_cover left"><a href="/2025/05/16/%E5%A4%9A%E5%B1%8F%E5%8D%8F%E4%BD%9C%E7%94%B5%E7%AB%9E%E5%81%A5%E5%BA%B7%E6%A1%8C%E6%A6%82%E5%BF%B5%E6%96%B9%E6%A1%88/" title="多屏协作电竞健康桌概念方案"><img class="post-bg" src="https://s2.loli.net/2025/05/16/Fxa5e1TZq8BdKPj.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="多屏协作电竞健康桌概念方案"></a></div><div class="recent-post-info"><a class="article-title" href="/2025/05/16/%E5%A4%9A%E5%B1%8F%E5%8D%8F%E4%BD%9C%E7%94%B5%E7%AB%9E%E5%81%A5%E5%BA%B7%E6%A1%8C%E6%A6%82%E5%BF%B5%E6%96%B9%E6%A1%88/" title="多屏协作电竞健康桌概念方案">多屏协作电竞健康桌概念方案</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2025-05-16T08:30:53.000Z" title="发表于 2025-05-16 16:30:53">2025-05-16</time></span></div><div class="content">  多屏协作电竞健康桌概念方案一、项目背景与目标（一）背景阐述随着电竞行业的迅猛发展，电竞玩家群体日益庞大。长时间高强度的游戏操作不仅要求设备具备高性能，更需要兼顾健康管理。传统电竞桌功能单一，仅满足基础放置需求，无法解决玩家久坐、用眼疲劳、沉浸感不足等问题。同时，多屏协作成为高端电竞及内容创作的主流需求。在此背景下，融合健康监测、智能调节与沉浸式体验的多屏协作电竞健康桌应运而生，旨在提升游戏体验的同时保障玩家健康。 （二）目标设定健康管理目标：通过疲劳监测功能，实时提醒玩家休息，降低久坐和用眼过度带来的健康风险。 沉浸式体验目标：实现 RGB 氛围灯、桌面高度、电竞椅震动反馈的联动，打造多维度沉浸式游戏体验。 效率提升目标：双显示器支架支持多任务协作，满足电竞比赛、游戏直播、视频剪辑等多样化需求。 市场定位目标：推出高端电竞健康设备，占据电竞家具细分市场，成为专业玩家和电竞爱好者的首选。 二、核心概念与创新点（一）概念描述多屏协作电竞健康桌以 “健康 + 沉浸 + 效率”...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/2025/05/16/%E8%AE%BE%E8%AE%A1%E6%B5%81%E7%A8%8B/" title="产品设计文档"><img class="post-bg" src="https://s2.loli.net/2025/05/16/IRLiWV6QrqkNtBG.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="产品设计文档"></a></div><div class="recent-post-info"><a class="article-title" href="/2025/05/16/%E8%AE%BE%E8%AE%A1%E6%B5%81%E7%A8%8B/" title="产品设计文档">产品设计文档</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2025-05-16T08:15:23.000Z" title="发表于 2025-05-16 16:15:23">2025-05-16</time></span></div><div class="content">...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/2025/05/16/%E5%B0%8F%E7%BB%84%E4%BF%A1%E6%81%AF/" title="小组信息"><img class="post-bg" src="https://s2.loli.net/2025/05/16/7dG1zw6jxshNIpt.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="小组信息"></a></div><div class="recent-post-info"><a class="article-title" href="/2025/05/16/%E5%B0%8F%E7%BB%84%E4%BF%A1%E6%81%AF/" title="小组信息">小组信息</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2025-05-16T07:55:43.000Z" title="发表于 2025-05-16 15:55:43">2025-05-16</time></span></div><div class="content">  暴躁破防组成员： 周康哲（组长）：软件工程2409班 陈语芳：软件工程2410班 罗東明：软件工程2409班 吴世豪：网络空间安全244班  组内分工 AI生成方案 –&gt; 陈语芳 家具说明制作，设计流程汇总 –&gt; 罗東明 整理设计文档，制作动态视频 –&gt; 周康哲 网页展示 –&gt; 吴世豪  </div></div></div></div><nav id="pagination"><div class="pagination"><span class="page-number current">1</span></div></nav></div></main><footer id="footer" style="background: transparent;"><div id="footer-wrap"></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>window.typedJSFn = {
+  init: str => {
+    window.typed = new Typed('#subtitle', Object.assign({
+      strings: str,
+      startDelay: 300,
+      typeSpeed: 150,
+      loop: true,
+      backSpeed: 50,
+    }, null))
+  },
+  run: subtitleType => {
+    if (true) {
+      if (typeof Typed === 'function') {
+        subtitleType()
+      } else {
+        btf.getScript('https://cdn.jsdelivr.net/npm/typed.js/dist/typed.umd.min.js').then(subtitleType)
+      }
+    } else {
+      subtitleType()
+    }
+  },
+  processSubtitle: (content, extraContents = []) => {
+    if (true) {
+      const sub = ["暴躁破防组为您带来～(∠・ω< )⌒★"].slice()
+
+      if (extraContents.length > 0) {
+        sub.unshift(...extraContents)
+      }
+
+      if (typeof content === 'string') {
+        sub.unshift(content)
+      } else if (Array.isArray(content)) {
+        sub.unshift(...content)
+      }
+
+      sub.length > 0 && typedJSFn.init(sub)
+    } else {
+      document.getElementById('subtitle').textContent = typeof content === 'string' ? content :
+        (Array.isArray(content) && content.length > 0 ? content[0] : '')
+    }
+  }
+}
+btf.addGlobalFn('pjaxSendOnce', () => { typed.destroy() }, 'typedDestroy')
+</script><script>function subtitleType () {
+  typedJSFn.processSubtitle(["暴躁破防组为您带来～(∠・ω< )⌒★"])
+}
+typedJSFn.run(subtitleType)</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
