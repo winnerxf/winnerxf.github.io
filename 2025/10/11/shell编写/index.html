@@ -14,7 +14,7 @@
 <meta property="og:description" content="今天开始编写一个用c语言写的shell">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-10-11T06:21:43.000Z">
-<meta property="article:modified_time" content="2025-10-11T07:04:29.590Z">
+<meta property="article:modified_time" content="2025-10-11T07:37:24.483Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
   
@@ -125,6 +125,30 @@
 <li><code>execute</code>：执行解析后的命令</li>
 </ul>
 <p>这也就是我上面所写的loop函数需要实现的功能</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">lsh_loop</span><span class="params">(<span class="type">void</span>)</span> &#123;</span><br><span class="line">  	<span class="type">char</span> *line;    <span class="comment">// 存储用户输入的一行命令</span></span><br><span class="line">  	<span class="type">char</span> **args;   <span class="comment">// 存储分割后的命令参数数组</span></span><br><span class="line">  	<span class="type">int</span> status;    <span class="comment">// 存储命令执行状态</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">do</span> &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;&gt; &quot;</span>);                    <span class="comment">// 显示提示符</span></span><br><span class="line">        line = lsh_read_line();          <span class="comment">// 读取输入</span></span><br><span class="line">        args = lsh_split_line(line);     <span class="comment">// 解析命令</span></span><br><span class="line">        status = lsh_execute(args);      <span class="comment">// 执行命令</span></span><br><span class="line"></span><br><span class="line">        <span class="built_in">free</span>(line);</span><br><span class="line">        <span class="built_in">free</span>(args);</span><br><span class="line">    &#125; <span class="keyword">while</span> (status); <span class="comment">// // 根据状态决定是否继续循环</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
       
     </div>
