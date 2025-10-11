@@ -14,7 +14,7 @@
 <meta property="og:description" content="今天开始编写一个用c语言写的shell">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-10-11T06:21:43.000Z">
-<meta property="article:modified_time" content="2025-10-11T06:46:18.946Z">
+<meta property="article:modified_time" content="2025-10-11T07:02:29.100Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
   
@@ -98,7 +98,7 @@
         <p>今天开始编写一个用c语言写的shell</p>
 <span id="more"></span>
 
-<p>shell的主要做的是三件事：</p>
+<h2 id="启动过程"><a href="#启动过程" class="headerlink" title="启动过程"></a>启动过程</h2><p>shell的主要做的是三件事：</p>
 <ul>
 <li>初始化：shell会读取并执行其配置文件</li>
 <li>解释：读取命令并执行它们</li>
@@ -107,32 +107,24 @@
 <p>但是我现在制作的是最简单的shell，没有自己的配置文件，也不会有关闭命令</p>
 <p>因此这个shell只需要不断的调用循环函数，然后终止</p>
 <p>首先下面的代码只是一部分，并不可以实现shell(即便是最简单的设立了)</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span> **argv)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="comment">// Run command loop.</span></span><br><span class="line">  lsh_loop();</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Perform any shutdown/cleanup.</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> EXIT_SUCCESS;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span> **argv)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="comment">// Run command loop.</span></span><br><span class="line">  lsh_loop();</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Perform any shutdown/cleanup.</span></span><br><span class="line">  <span class="comment">// 程序退出前的清理工作，当前只是注释</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> EXIT_SUCCESS;</span><br><span class="line">  <span class="comment">//正常退出程序，EXIT_SUCCESS 通常定义为 0</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<p>其中的l s h_l o o p()函数将循环解释命令，以下是实现过程</p>
+<hr>
+<h2 id="loop函数的实现"><a href="#loop函数的实现" class="headerlink" title="loop函数的实现"></a>loop函数的实现</h2><p>前面的代码只是简单提及了启动的过程，执行loop函数，然后就返回</p>
+<p>显而易见核心是loop函数的实现</p>
+<p>我们可以思考一下shell会对我们输入的命令做什么：</p>
+<ul>
+<li><code>read</code>：首先肯定是读取你输入的命令</li>
+<li><code>parse</code>：其次就是解析你的命令，如果不解析命令电脑就不理解你输入的命令的含义**(这里的解析命令是把命令分割为程序和参数)**</li>
+</ul>
+<p>比如命令<code>ls -l</code>这个命令就会被分割为<code>ls</code>和<code>-l</code></p>
+<ul>
+<li><code>execute</code>：执行解析后的命令</li>
+</ul>
+<p>这也就是我上面所写的loop函数需要实现的功能</p>
 
       
     </div>
