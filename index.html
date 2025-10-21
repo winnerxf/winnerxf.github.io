@@ -85,7 +85,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2025/10/11/interpretation/">编辑器1</a>
+      <a class="p-name article-title" href="/2025/10/11/interpretation/">解释器</a>
     </h1>
   
 
@@ -93,49 +93,17 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <p>&lt;! –more–&gt;</p>
-<p>首先需要明白解释和编译的区别：</p>
-<ul>
-<li>解释器：实时翻译，解释器边读取代码边翻译成机器能理解的指令，边执行，不生成可执行文件</li>
-<li>编译器：提前翻译，先把整个源代码翻译成机器语言，生成一个可执行文件(如exe)，之后直接运行就可以直接执行该文件</li>
-</ul>
-<h2 id="编译器的构建流程"><a href="#编译器的构建流程" class="headerlink" title="编译器的构建流程"></a>编译器的构建流程</h2><ul>
-<li>1.词法分析器：</li>
-</ul>
-<p>把输入的语法拆分，如<code>int a=1</code>会被拆分为<code>int</code>和<code>a</code>和<code>=</code>和<code>1</code>这几个token</p>
-<p>但是这个步骤不会判断语法逻辑</p>
-<ul>
-<li>2.语法分析器：</li>
-</ul>
-<p>会根据语法规则把拆分好的token组织成有逻辑的句子结构</p>
-<p>比如上述的情况会将<code>int a=1</code>的token按“声明语句–类型–变量–赋值”的逻辑生成一个分层的树状结构，同时会检查语法错误</p>
-<ul>
-<li>3.生成目标代码：</li>
-</ul>
-<p>把上面生成的语法树翻译成机器&#x2F;虚拟机可以执行的指令</p>
-<p>比如把<code>int a=1</code>的语法树转化成CPU可以执行的“分配内存”“存入数值1”等机器码或虚拟机可以执行的字节码</p>
-<h2 id="框架"><a href="#框架" class="headerlink" title="框架"></a>框架</h2><p>编译器主要包含四个函数：</p>
-<ul>
-<li><code>next()</code>:取词器</li>
-</ul>
-<p>从源代码的字符串中获取下一个有效Token，并自动跳过空格 换行 注释等无用字符</p>
-<p>例如在<code>a = b + 1</code>会返回“a”“&#x3D;”“b”“+”“1”</p>
-<ul>
-<li><code>program()</code>:进行语法分析，解析整个c程序的结构，包括调用其他语法分析函数(解析函数定义 变量声明 语句块)</li>
-</ul>
-<p>会按照c语言的语法规则把<code>next</code>传递的Token流组织成描述整个程序逻辑的语法数</p>
-<p>比如先解析include头文件，再解析main函数，最后解析函数内的语句</p>
-<ul>
-<li><p><code>expression(level)</code>:解析代码中的表达式</p>
-</li>
-<li><p><code>eval()</code>:</p>
-</li>
-</ul>
-
+        <p>用c语言写一个解释器</p>
+<p>实际上解释器和编译器是很像的，但是解释器需要我们实现自己的虚拟机与指令集，这部分内容比较有帮助</p>
+        
+          <p class="article-more-link">
+            <a href="/2025/10/11/interpretation/#more">Read More</a>
+          </p>
+        
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/10/11/interpretation/" data-id="cuidu-9eO17tN1M9VIPzcecja" data-title="编辑器1" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/10/11/interpretation/" data-id="cuidu-9eO17tN1M9VIPzcecja" data-title="解释器" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -264,7 +232,7 @@
       <ul>
         
           <li>
-            <a href="/2025/10/11/interpretation/">编辑器1</a>
+            <a href="/2025/10/11/interpretation/">解释器</a>
           </li>
         
           <li>

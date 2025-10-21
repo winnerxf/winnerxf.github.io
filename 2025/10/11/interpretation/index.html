@@ -4,17 +4,17 @@
   <meta charset="utf-8">
   
   
-  <title>编辑器1 | Hexo</title>
+  <title>解释器 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="&lt;! –more–&gt; 首先需要明白解释和编译的区别：  解释器：实时翻译，解释器边读取代码边翻译成机器能理解的指令，边执行，不生成可执行文件 编译器：提前翻译，先把整个源代码翻译成机器语言，生成一个可执行文件(如exe)，之后直接运行就可以直接执行该文件  编译器的构建流程 1.词法分析器：  把输入的语法拆分，如int a&#x3D;1会被拆分为int和a和&#x3D;和1这几个token 但是这个步骤">
+  <meta name="description" content="用c语言写一个解释器 实际上解释器和编译器是很像的，但是解释器需要我们实现自己的虚拟机与指令集，这部分内容比较有帮助">
 <meta property="og:type" content="article">
-<meta property="og:title" content="编辑器1">
+<meta property="og:title" content="解释器">
 <meta property="og:url" content="http://example.com/2025/10/11/interpretation/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="&lt;! –more–&gt; 首先需要明白解释和编译的区别：  解释器：实时翻译，解释器边读取代码边翻译成机器能理解的指令，边执行，不生成可执行文件 编译器：提前翻译，先把整个源代码翻译成机器语言，生成一个可执行文件(如exe)，之后直接运行就可以直接执行该文件  编译器的构建流程 1.词法分析器：  把输入的语法拆分，如int a&#x3D;1会被拆分为int和a和&#x3D;和1这几个token 但是这个步骤">
+<meta property="og:description" content="用c语言写一个解释器 实际上解释器和编译器是很像的，但是解释器需要我们实现自己的虚拟机与指令集，这部分内容比较有帮助">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-10-11T06:25:57.000Z">
-<meta property="article:modified_time" content="2025-10-21T11:33:13.899Z">
+<meta property="article:modified_time" content="2025-10-21T12:22:09.053Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
   
@@ -87,7 +87,7 @@
         
   
     <h1 class="p-name article-title" itemprop="headline name">
-      编辑器1
+      解释器
     </h1>
   
 
@@ -95,7 +95,14 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <p>&lt;! –more–&gt;</p>
+        <p>用c语言写一个解释器</p>
+<p>实际上解释器和编译器是很像的，但是解释器需要我们实现自己的虚拟机与指令集，这部分内容比较有帮助</p>
+<span id="more"></span>
+
+
+
+<p>虚拟机理解成一个虚拟的计算机就行</p>
+<p>虚拟机指令集是虚拟机自身能识别和执行“专属命令集”，类似与CPU的机器指令，但是只在虚拟机内部生效</p>
 <p>首先需要明白解释和编译的区别：</p>
 <ul>
 <li>解释器：实时翻译，解释器边读取代码边翻译成机器能理解的指令，边执行，不生成可执行文件</li>
@@ -118,26 +125,40 @@
 <p>比如把<code>int a=1</code>的语法树转化成CPU可以执行的“分配内存”“存入数值1”等机器码或虚拟机可以执行的字节码</p>
 <h2 id="框架"><a href="#框架" class="headerlink" title="框架"></a>框架</h2><p>编译器主要包含四个函数：</p>
 <ul>
-<li><code>next()</code>:取词器</li>
+<li>1.<code>next()</code>:取词器</li>
 </ul>
 <p>从源代码的字符串中获取下一个有效Token，并自动跳过空格 换行 注释等无用字符</p>
 <p>例如在<code>a = b + 1</code>会返回“a”“&#x3D;”“b”“+”“1”</p>
 <ul>
-<li><code>program()</code>:进行语法分析，解析整个c程序的结构，包括调用其他语法分析函数(解析函数定义 变量声明 语句块)</li>
+<li>2.<code>program()</code>:进行语法分析，解析整个c程序的结构，包括调用其他语法分析函数(解析函数定义 变量声明 语句块)</li>
 </ul>
 <p>会按照c语言的语法规则把<code>next</code>传递的Token流组织成描述整个程序逻辑的语法数</p>
 <p>比如先解析include头文件，再解析main函数，最后解析函数内的语句</p>
 <ul>
-<li><p><code>expression(level)</code>:解析代码中的表达式</p>
-</li>
-<li><p><code>eval()</code>:</p>
-</li>
+<li>3.<code>expression(level)</code>:解析代码中的表达式</li>
 </ul>
+<p>表达式：如”a + b * 3” “x &gt; 5 &amp;&amp; y &#x3D;&#x3D; 0”等</p>
+<p>参数level用于处理运算符的优先级</p>
+<ul>
+<li>4.<code>eval()</code>:虚拟机入口，用于解释目标代码</li>
+</ul>
+<p>处理(int a&#x3D;2+3):</p>
+<p>1.从语法树的“函数定义节点”开始，定位到main函数的“语句块节点”</p>
+<p>2.执行<code>int a</code>：调用虚拟机的内存分配功能，在虚拟内存中为变量a开辟一块空间</p>
+<p>3.执行<code>2 + 3</code>:调用虚拟机的算术运算功能，计算结果为5</p>
+<p>4.执行<code>a=5</code>:调用虚拟机的内存写入功能，将5存入变量a对应的虚拟内存地址，完成整个代码的解释执行</p>
+<p>在前面的<code>expression</code>函数只用于解析表达式是因为表达式在语法分析中相对独立且较复杂，所以将它独立起来</p>
+<p>所以代码如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;memory.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> token;</span><br><span class="line"><span class="type">char</span> *src,*old_src;</span><br><span class="line"><span class="type">int</span> poolsize;</span><br><span class="line"><span class="type">int</span> line;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">next</span><span class="params">()</span>&#123;</span><br><span class="line">    token = *src++;</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">expression</span><span class="params">(<span class="type">int</span> level)</span>&#123;</span><br><span class="line">    <span class="comment">//not something</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">program</span><span class="params">()</span>&#123;</span><br><span class="line">    next();</span><br><span class="line">    <span class="keyword">while</span>(token &gt; <span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;token is:%c\n&quot;</span>,token);</span><br><span class="line">        next();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="type">int</span>  <span class="title function_">eval</span><span class="params">()</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc,<span class="type">char</span> **argv)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> i,fd;</span><br><span class="line"></span><br><span class="line">    argc--;</span><br><span class="line">    argc++;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    poolsize = <span class="number">256</span> * <span class="number">1024</span>;</span><br><span class="line">    line = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>((fd = open(*argv,<span class="number">0</span>)) &lt; <span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;could not open(%s)\n&quot;</span>,*argv);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(!(src = old_src = <span class="built_in">malloc</span>(poolsize)))</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;could not malloc(%d) for source area\n&quot;</span>,poolsize);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>((i = read(fd,src,poolsize<span class="number">-1</span>)) &lt;= <span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;read() returned %d\n&quot;</span>,i);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    src[i] = <span class="number">0</span>;</span><br><span class="line">    closed(fd);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    program();</span><br><span class="line">    <span class="keyword">return</span> eval;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>这上面的代码只是读取一个源代码文件，逐个读取每个字符并输出每个字符。</p>
+<p>但是函数的作用并没有完全填补完全</p>
+<hr>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2025/10/11/interpretation/" data-id="cuidu-9eO17tN1M9VIPzcecja" data-title="编辑器1" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2025/10/11/interpretation/" data-id="cuidu-9eO17tN1M9VIPzcecja" data-title="解释器" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -188,7 +209,7 @@
       <ul>
         
           <li>
-            <a href="/2025/10/11/interpretation/">编辑器1</a>
+            <a href="/2025/10/11/interpretation/">解释器</a>
           </li>
         
           <li>
