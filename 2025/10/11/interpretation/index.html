@@ -13,10 +13,12 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="用c语言写一个解释器 实际上解释器和编译器是很像的，但是解释器需要我们实现自己的虚拟机与指令集，这部分内容比较有帮助">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/interpretation.assets/image-20251022101700462.png">
 <meta property="article:published_time" content="2025-10-11T06:25:57.000Z">
-<meta property="article:modified_time" content="2025-10-21T12:22:09.053Z">
+<meta property="article:modified_time" content="2025-10-29T09:27:39.797Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/interpretation.assets/image-20251022101700462.png">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -149,11 +151,347 @@
 <p>4.执行<code>a=5</code>:调用虚拟机的内存写入功能，将5存入变量a对应的虚拟内存地址，完成整个代码的解释执行</p>
 <p>在前面的<code>expression</code>函数只用于解析表达式是因为表达式在语法分析中相对独立且较复杂，所以将它独立起来</p>
 <p>所以代码如下：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;memory.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> token;</span><br><span class="line"><span class="type">char</span> *src,*old_src;</span><br><span class="line"><span class="type">int</span> poolsize;</span><br><span class="line"><span class="type">int</span> line;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">next</span><span class="params">()</span>&#123;</span><br><span class="line">    token = *src++;</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">expression</span><span class="params">(<span class="type">int</span> level)</span>&#123;</span><br><span class="line">    <span class="comment">//not something</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">program</span><span class="params">()</span>&#123;</span><br><span class="line">    next();</span><br><span class="line">    <span class="keyword">while</span>(token &gt; <span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;token is:%c\n&quot;</span>,token);</span><br><span class="line">        next();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="type">int</span>  <span class="title function_">eval</span><span class="params">()</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc,<span class="type">char</span> **argv)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> i,fd;</span><br><span class="line"></span><br><span class="line">    argc--;</span><br><span class="line">    argc++;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    poolsize = <span class="number">256</span> * <span class="number">1024</span>;</span><br><span class="line">    line = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>((fd = open(*argv,<span class="number">0</span>)) &lt; <span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;could not open(%s)\n&quot;</span>,*argv);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(!(src = old_src = <span class="built_in">malloc</span>(poolsize)))</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;could not malloc(%d) for source area\n&quot;</span>,poolsize);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>((i = read(fd,src,poolsize<span class="number">-1</span>)) &lt;= <span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;read() returned %d\n&quot;</span>,i);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    src[i] = <span class="number">0</span>;</span><br><span class="line">    closed(fd);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    program();</span><br><span class="line">    <span class="keyword">return</span> eval;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;memory.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> token;<span class="comment">//分割出来的token</span></span><br><span class="line"><span class="type">char</span> *src,*old_src;<span class="comment">//字符串指针</span></span><br><span class="line"><span class="type">int</span> poolsize;<span class="comment">//内存大小</span></span><br><span class="line"><span class="type">int</span> line;<span class="comment">//行号</span></span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">next</span><span class="params">()</span>&#123;</span><br><span class="line">    token = *src++;</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">&#125;<span class="comment">//先获取当前字符再前移一位</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">expression</span><span class="params">(<span class="type">int</span> level)</span>&#123;</span><br><span class="line">    <span class="comment">//not something</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">program</span><span class="params">()</span>&#123;</span><br><span class="line">    next();<span class="comment">//获取第一个token</span></span><br><span class="line">    <span class="keyword">while</span>(token &gt; <span class="number">0</span>)<span class="comment">//直到遇到EOF(0)字符</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;token is:%c\n&quot;</span>,token);</span><br><span class="line">        next();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;<span class="comment">//打印每个字符</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="type">int</span>  <span class="title function_">eval</span><span class="params">()</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc,<span class="type">char</span> **argv)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> i,fd;</span><br><span class="line"></span><br><span class="line">    argc--;</span><br><span class="line">    argv++;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    poolsize = <span class="number">256</span> * <span class="number">1024</span>;</span><br><span class="line">    line = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">//打开文件</span></span><br><span class="line">    <span class="keyword">if</span>((fd = open(*argv,<span class="number">0</span>)) &lt; <span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;could not open(%s)\n&quot;</span>,*argv);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">//分配内存</span></span><br><span class="line">    <span class="keyword">if</span>(!(src = old_src = <span class="built_in">malloc</span>(poolsize)))</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;could not malloc(%d) for source area\n&quot;</span>,poolsize);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">//读取文件内容</span></span><br><span class="line">    <span class="keyword">if</span>((i = read(fd,src,poolsize<span class="number">-1</span>)) &lt;= <span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;read() returned %d\n&quot;</span>,i);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    src[i] = <span class="number">0</span>;<span class="comment">//添加字符串结尾EOF</span></span><br><span class="line">    closed(fd);<span class="comment">//关闭文件</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    program();<span class="comment">//启动编译过程</span></span><br><span class="line">    <span class="keyword">return</span> eval;<span class="comment">//执行</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<ul>
+<li><code>argc</code> (argument count)：命令行参数的数量</li>
+<li><code>argv</code> (argument vector)：命令行参数字符串数组</li>
+</ul>
+<p><img src="/./interpretation.assets/image-20251022101700462.png" alt="image-20251022101700462"></p>
 <p>这上面的代码只是读取一个源代码文件，逐个读取每个字符并输出每个字符。</p>
 <p>但是函数的作用并没有完全填补完全</p>
 <hr>
+<h2 id="虚拟机部分"><a href="#虚拟机部分" class="headerlink" title="虚拟机部分"></a>虚拟机部分</h2><p>上面已经解释了解释器和编译器的区别就是需要了解虚拟机和指令集的部分，所以接下来就要学会构建一台虚拟机，设计我们自己的指令集，运行我们的指令集，通俗点说就是需要自己实现一套汇编语言。它们将作为我们的编译器最终输出的目标代码</p>
+<p>在一个计算机中<strong>CPU</strong>，<strong>寄存器</strong>以及<strong>内存</strong>是我们最关心的</p>
+<p>代码(形成的汇编指令)以二进制的形式保存在寄存器中，CPU从其中一条条加载指令执行，程序运行的状态保存在寄存器中</p>
+<h3 id="内存"><a href="#内存" class="headerlink" title="内存"></a>内存</h3><p>现代的操作系统都不直接使用内存，而是使用虚拟内存</p>
+<p>虚拟内存可以理解为一种映射，在我们编写的程序眼中，我们可以使用全部的内存地址，而操作系统需要把它映射到实际的内存上</p>
+<p>一般而言，进程的内存会被分为几个段：</p>
+<ul>
+<li>代码段(<code>next</code>)用于存放代码(指令)</li>
+<li>数据段(<code>data</code>)用于存放初始化了的数据，如<code>int i=10</code>就需要存放到数据段</li>
+<li>未初始化数据段(<code>bss</code>)用于存放未初始化的数据，如<code>int i[100]</code>，因为不关心其中的真正数值，所以单独存放可以节省空间，减少程序的体积</li>
+<li>栈(<code>stack</code>)用于处理函数调用的相关数据，如调用帧(<code>calling frame</code>)或是函数的局部变量</li>
+<li>堆(<code>heap</code>)用于为程序动态分配内存</li>
+</ul>
+<p>它们在内存中的位置类似于下面：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">+------------------+</span><br><span class="line">|    stack   |     |      high address</span><br><span class="line">|    ...     v     |</span><br><span class="line">|                  |</span><br><span class="line">|                  |</span><br><span class="line">|                  |</span><br><span class="line">|                  |</span><br><span class="line">|    ...     ^     |</span><br><span class="line">|    heap    |     |</span><br><span class="line">+------------------+</span><br><span class="line">| bss  segment     |</span><br><span class="line">+------------------+</span><br><span class="line">| data segment     |</span><br><span class="line">+------------------+</span><br><span class="line">| text segment     |      low address</span><br><span class="line">+------------------+</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<p>但是我们制作的只是简化版的虚拟机，所以我们只关心三个内容：代码段，数据段以及栈</p>
+<p>其中数据段我们只存放字符串，因为我们的编译器不支持初始化变量。所以我们也不需要未初始化变量</p>
+<p>理论上我们的虚拟机需要维护自己的堆用于内存分配，但是实际实现上较复杂且与编译无关，所以我们引入一个指令<code>MEST</code>使我们可以直接使用编译器(解释器)中的内存</p>
+<p>综上，我们需要首先在全局添加如下代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> *text,<span class="comment">//代码段</span></span><br><span class="line">    *old_text,</span><br><span class="line">    *<span class="built_in">stack</span>;<span class="comment">//栈</span></span><br><span class="line"><span class="type">char</span> **data;<span class="comment">//数据段</span></span><br></pre></td></tr></table></figure>
+
+<p>虽然这里是<code>int</code>类型，但是要理解成无符号的整型，因为我们会在代码段中存放如指针&#x2F;内存地址的数据，它们都是无符号的</p>
+<p>其中数据段由于只存放字符串，所以是<code>char *</code>型的</p>
+<p>接着在<code>main</code>函数加入初始化代码，为其分配内存</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(!(text = old_text = <span class="built_in">malloc</span>(poolsize)))</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;could not malloc(%d) for text area\n&quot;</span>,poolsize);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(!(data = <span class="built_in">malloc</span>(poolsize)))</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;could not malloc(%d) for text area\n&quot;</span>,poolsize);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(!(<span class="built_in">stack</span> = <span class="built_in">malloc</span>(poolsize)))</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;could not malloc(%d) for text area\n&quot;</span>,poolsize);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">memset</span>(text,<span class="number">0</span>,poolsize);</span><br><span class="line"><span class="built_in">memset</span>(data,<span class="number">0</span>,poolsize);</span><br><span class="line"><span class="built_in">memset</span>(<span class="built_in">stack</span>,<span class="number">0</span>,poolsize);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h3 id="寄存器"><a href="#寄存器" class="headerlink" title="寄存器"></a>寄存器</h3><p>计算机中寄存器用英语存放计算机的运行状态，真正的计算机有很多中类型的寄存器，但是我们的简化版，所以只使用四种寄存器：</p>
+<ul>
+<li><code>PC</code> 程序计数器，它存放的是一个内存地址，该地址存放着下一条要执行的计算机指令</li>
+<li><code>SP</code> 指针寄存器，永远指向当前的栈顶，需要注意的是由于栈是位于高地址并向低地址增长的，所以入栈时<code>SP</code>的值减小</li>
+<li><code>BP</code> 基址指针，也是用于指向栈的某些位置，在调用函数时会用到它</li>
+<li><code>AX</code> 通用寄存器，在我们的虚拟机中，它用于存放一条指令执行后的结果</li>
+</ul>
+<p>在全局中要加入以下定义：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
       
     </div>
@@ -169,7 +507,7 @@
 <nav id="article-nav">
   
   
-    <a href="/2025/10/11/shell%E7%BC%96%E5%86%99/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2025/10/11/shell%E7%BC%96%E5%86%991/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
       <div class="article-nav-title">shell编写</div>
     </a>
@@ -213,7 +551,7 @@
           </li>
         
           <li>
-            <a href="/2025/10/11/shell%E7%BC%96%E5%86%99/">shell编写</a>
+            <a href="/2025/10/11/shell%E7%BC%96%E5%86%991/">shell编写</a>
           </li>
         
           <li>
