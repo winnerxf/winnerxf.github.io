@@ -6,15 +6,15 @@
   
   <title>解释器2 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="前面写了一个解释器的一部分，但是没有完成全部的内容，且因为对于课内的知识了解不足，所以我暂停了博客的编写">
+  <meta name="description" content="前面写了一个解释器的一部分，但是没有完成全部的内容，且因为对于课内的知识了解不足，所以我暂停了博客的编写 对于代码的注释部分我加的很多，因为有些部分我自己也没有理解，我是誉抄一遍别人的教程">
 <meta property="og:type" content="article">
 <meta property="og:title" content="解释器2">
 <meta property="og:url" content="http://example.com/2025/11/04/%E7%BC%96%E8%AF%91%E5%99%A82/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="前面写了一个解释器的一部分，但是没有完成全部的内容，且因为对于课内的知识了解不足，所以我暂停了博客的编写">
+<meta property="og:description" content="前面写了一个解释器的一部分，但是没有完成全部的内容，且因为对于课内的知识了解不足，所以我暂停了博客的编写 对于代码的注释部分我加的很多，因为有些部分我自己也没有理解，我是誉抄一遍别人的教程">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-11-04T11:11:18.000Z">
-<meta property="article:modified_time" content="2025-11-04T11:24:02.801Z">
+<meta property="article:modified_time" content="2025-11-07T16:53:42.721Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
   
@@ -96,402 +96,160 @@
     <div class="e-content article-entry" itemprop="articleBody">
       
         <p>前面写了一个解释器的一部分，但是没有完成全部的内容，且因为对于课内的知识了解不足，所以我暂停了博客的编写</p>
+<p>对于代码的注释部分我加的很多，因为有些部分我自己也没有理解，我是誉抄一遍别人的教程</p>
 <span id="more"></span>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<p>上次是写到了指令集的部分就停止了，现在接着后面开始写</p>
+<h2 id="指令集"><a href="#指令集" class="headerlink" title="指令集"></a>指令集</h2><p>指令集是CPU能识别的命令的集合，也可以说是CPU能理解的语言，这里我们需要为我们制作的虚拟机构建自己的指令集，它们基于x86的指令集，但是更加简单拿一些</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span> &#123;</span> LEA ,IMM ,JMP ,CALL,JZ  ,JNZ ,ENT ,ADJ ,LEV ,LI  ,LC  ,SI  ,SC  ,PUSH,</span><br><span class="line">OR  ,XOR ,AND ,EQ  ,NE  ,LT  ,GT  ,LE  ,GE  ,SHL ,SHR ,ADD ,SUB ,MUL ,DIV ,MOD ,</span><br><span class="line">OPEN,READ,CLOS,PRTF,MALC,MSET,MCMP,EXIT &#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>这些指令的顺序安排是有意的，稍后你会看到，带有参数的指令在前，没有参数的指令在后</p>
+<p>这种顺序的唯一作用就是在打印调试信息时更加方便</p>
+<h3 id="MOV"><a href="#MOV" class="headerlink" title="MOV"></a>MOV</h3><p><code>MOV</code>是所有指令中最基础的一个，它用于将数据放进寄存器或内存地址，类似与c语言的赋值语句</p>
+<p>x86的<code>MOV</code>指令有两个参数，分别是源地址和目标地址：<code>MOV dest,source</code></p>
+<p>表示将<code>source</code>的内容放在<code>dest</code>中，它们可以是一个数，寄存器或是一个内存地址</p>
+<p>一方面，我们的虚拟机只有一个寄存器，另外一个方面，识别这些参数的类型(是数还是地址)是比较困难的</p>
+<p>所以我们把<code>MOV</code>指令拆分成5歌指令，这些指令只接受一个参数，如下：</p>
+<ul>
+<li><code>IMM &amp;lt;num&amp;gt;</code> ：将<code>&amp;lt;num&amp;gt;</code>放入寄存器<code>ax</code>中</li>
+<li><code>LC </code>：将对应地址中的字符载入<code>ax</code>中，要求<code>ax</code>中存放地址</li>
+<li><code>LI</code> ：将对应地址中的整数载入<code>ax</code>中，要求<code>ax</code>中存放地址</li>
+<li><code>SC </code>：将<code>ax</code>中的数据作为字符存放入地址，要求栈顶存放地址</li>
+<li><code>SI </code>：将<code>ax</code>中的数据作为整数存放入地址，要求栈顶存放地址</li>
+</ul>
+<p>虽然一个指令变成了多个指令，但是系统却并没有变得更复杂，首先MOV指令其实有很多变种，根据类型的不同有MOVB，MOVW等指令</p>
+<p>我们这里的<code>LC/SC</code>和<code>LI/SI</code>就是对应字符型和整型的存取操作</p>
+<p>但是更重要的是，通过将MOV指令拆分为这些指令，只有IMN需要有参数，且不需要判断类型，所以大大简化了实现难度</p>
+<p>接着需要在<code>eval()</code>函数中加入下列代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">eval</span><span class="params">()</span> &#123;</span><br><span class="line"><span class="type">int</span> op, *tmp;</span><br><span class="line"><span class="keyword">while</span> (<span class="number">1</span>) &#123;</span><br><span class="line"><span class="keyword">if</span> (op == IMM)       &#123;ax = *pc++;&#125; <span class="comment">// load immediate value to ax</span></span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> (op == LC)   &#123;ax = *(<span class="type">char</span> *)ax;&#125; <span class="comment">// load character to ax, address in ax</span></span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> (op == LI)   &#123;ax = *(<span class="type">int</span> *)ax;&#125; <span class="comment">// load integer to ax, address in ax</span></span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> (op == SC)   &#123;ax = *(<span class="type">char</span> *)*sp++ = ax;&#125; <span class="comment">// save character to address, value in ax, address on stack</span></span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> (op == SI)   &#123;*(<span class="type">int</span> *)*sp++ = ax;&#125; <span class="comment">// save integer to address, value in ax, address on stack</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>其中的 <code>*sp++</code> 的作用是退栈，相当于 <code>POP</code> 操作</p>
+<p>对于<code>else if (op == SC) {ax = *(char *)*sp++ = ax;}</code> 的操作的解释：</p>
+<p><strong>将<code>ax</code>中的字符值存储到栈顶指针指向的地址</strong></p>
+<ul>
+<li><code>*sp</code> 获取栈顶的地址</li>
+<li><code>*(char *)*sp = ax</code> 将<code>ax</code>的低字节存储到该地址</li>
+<li><code>sp++</code> 栈指针上移（弹出地址）</li>
+<li><code>ax = ...</code> 同时将存储的值赋回<code>ax</code></li>
+</ul>
+<p>假设执行前：</p>
+<ul>
+<li><code>ax = &#39;A&#39;</code> (65)</li>
+<li><code>sp</code>指向的内存：<code>[0x1000, ...]</code> (栈顶是地址0x1000)</li>
+</ul>
+<p>执行后：</p>
+<ul>
+<li>内存地址<code>0x1000</code>处存储了字符’A’</li>
+<li><code>sp</code>上移指向下一个位置</li>
+<li><code>ax</code>仍然保持’A’</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> (op == SI) &#123;*(<span class="type">int</span> *)*sp++ = ax;&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li><strong>作用</strong>: 将<code>ax</code>中的整数值存储到栈顶指针指向的地址</li>
+<li><strong>分解</strong>:<ul>
+<li><code>*sp</code> 获取栈顶的地址</li>
+<li><code>*(int *)*sp = ax</code> 将<code>ax</code>的整数值存储到该地址</li>
+<li><code>sp++</code> 栈指针上移</li>
+</ul>
+</li>
+</ul>
+<p>假设执行前：</p>
+<ul>
+<li><code>ax = 100</code></li>
+<li><code>sp</code>指向的内存：<code>[0x2000, ...]</code> (栈顶是地址0x2000)</li>
+</ul>
+<p>执行后：</p>
+<ul>
+<li>内存地址<code>0x2000</code>处存储了整数100</li>
+<li><code>sp</code>上移指向下一个位置</li>
+<li><code>ax</code>保持不变为100</li>
+</ul>
+<p>这里要解释的一点是，为什么 <code>SI/SC</code> 指令中，地址存放在栈中，而 <code>LI/LC</code> 中，地址存放在<code>ax</code> 中？原因是默认计算的结果是存放在 <code>ax</code> 中的，而地址通常是需要通过计算获得，所以执行 <code>LI/LC</code> 时直接从 <code>ax</code> 取值会更高效</p>
+<p>另一点是我们的 <code>PUSH</code> 指令只能将 <code>ax</code> 的值放到栈上，而不能以值作为参数</p>
+<hr>
+<h3 id="PUSH"><a href="#PUSH" class="headerlink" title="PUSH"></a>PUSH</h3><p>在x86中，PUSH的作用是将值或寄存器的值压入栈中，但是在我们的虚拟机中</p>
+<p>它的作用是将<code>ax</code>的值压入栈中，并且我们只有一个寄存器<code>ax</code>，代码如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> (op == PUSH) &#123;*--sp = ax;&#125; <span class="comment">// push the value of ax onto the stack</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<hr>
+<h3 id="JMP"><a href="#JMP" class="headerlink" title="JMP"></a>JMP</h3><p><code>JMP &lt;addr&gt;</code> 是跳转指令，无条件地将当前的 <code>PC</code> 寄存器设置为指定的 <code>&lt;addr&gt;</code>，实现如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> (op == JMP)  &#123;pc = (<span class="type">int</span> *)*pc;&#125; <span class="comment">// jump to the address</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>需要记住的是<code>pc</code>寄存器指向的是下一条的指令，所以此时它存放的是<code>JMP</code>指令的参数，即<code>&amp;lt;addr&amp;gt;</code>的值</p>
+<hr>
+<h3 id="JZ-JNZ"><a href="#JZ-JNZ" class="headerlink" title="JZ&#x2F;JNZ"></a>JZ&#x2F;JNZ</h3><p>这里我们只实现<code>ax</code>为0或不为0的情况下跳转：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> (op == JZ)   &#123;pc = ax ? pc + <span class="number">1</span> : (<span class="type">int</span> *)*pc;&#125; <span class="comment">// jump if ax is zero</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong><code>JZ</code> - 为零时跳转</strong></p>
+<p>执行逻辑：</p>
+<ul>
+<li><strong>如果 <code>ax == 0</code></strong>：<code>pc = (int *)*pc</code> （跳转到目标地址）</li>
+<li><strong>如果 <code>ax != 0</code></strong>：<code>pc = pc + 1</code> （继续执行下一条指令）</li>
+</ul>
+<p>执行过程：</p>
+<ol>
+<li>读取 <code>JZ</code> 操作码后，<code>pc</code> 指向参数（目标地址）</li>
+<li>检查 <code>ax</code> 的值：<ul>
+<li>如果 <code>ax</code> 为 0，跳转到 <code>*pc</code> 指向的地址</li>
+<li>如果 <code>ax</code> 不为 0，<code>pc</code> 加 1 跳过参数，继续顺序执行</li>
+</ul>
+</li>
+</ol>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> (op == JNZ)  &#123;pc = ax ? (<span class="type">int</span> *)*pc : pc + <span class="number">1</span>;&#125; <span class="comment">// jump if ax is not zero</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong><code>JNZ</code> - 不为零时跳转</strong></p>
+<p>执行逻辑：</p>
+<ul>
+<li><strong>如果 <code>ax != 0</code></strong>：<code>pc = (int *)*pc</code> （跳转到目标地址）</li>
+<li><strong>如果 <code>ax == 0</code></strong>：<code>pc = pc + 1</code> （继续执行下一条指令）</li>
+</ul>
+<p>执行过程：</p>
+<ol>
+<li>读取 <code>JNZ</code> 操作码后，<code>pc</code> 指向参数（目标地址）</li>
+<li>检查 <code>ax</code> 的值：<ul>
+<li>如果 <code>ax</code> 不为 0，跳转到 <code>*pc</code> 指向的地址</li>
+<li>如果 <code>ax</code> 为 0，<code>pc</code> 加 1 跳过参数，继续顺序执行</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="子函数调用"><a href="#子函数调用" class="headerlink" title="子函数调用"></a>子函数调用</h3><p>这里较难，所以就一起讲解命令<code>CALL</code> ,<code>ENT</code> ,<code>ADj</code> ,<code>LEV</code></p>
+<p>首先介绍<code>CALL &amp;lt;addr&amp;gt;</code>和<code>RET</code>指令</p>
+<p>CALL的作用是跳转到地址为<code>&amp;lt;addr&amp;gt;</code>的子函数，RET的作用则是从子函数中返回</p>
+<p>但是为什么不能直接使用JMP指令呢，因为当我们从子函数中返回时，程序需要回到跳转之前的地方继续运行，所以需要事先把这个位置的信息存储起来，反过来，子函数要返回时，就需要获取并恢复这个信息，所以实际中我们将<code>PC</code>保存在栈中</p>
+<p>如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> (op == CALL) &#123;*--sp = (<span class="type">int</span>)(pc+<span class="number">1</span>); pc = (<span class="type">int</span> *)*pc;&#125; <span class="comment">// call subroutine</span></span><br><span class="line"><span class="comment">//else if (op == RET)  &#123;pc = (int *)*sp++;&#125;                            // return from subroutine;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>这里我们<code>RET</code>相关的内容注释了，这是因为我们之后会用<code>LEV</code>指令来代替它</p>
+<p>在实际调用函数时，不仅要考虑函数的地址，还要考虑如何传递参数和如何返回结果</p>
+<p>所以在这里，我们约定如果子函数有返回结果，那就在返回时保存在<code>ax</code>中，它可以是一个值，也可以是一个地址，那么参数的传递呢？</p>
+<p>每种编程语言关于如何调用子函数有不同的约定，例如c语言的调用标准是：</p>
+<ul>
+<li>由调用者将参数入栈</li>
+<li>调用结束时，由调用者将参数出栈</li>
+<li>参数逆序入栈</li>
+</ul>
 
       
     </div>
@@ -505,6 +263,15 @@
   
     
 <nav id="article-nav">
+  
+    <a href="/2025/11/23/%E5%8D%95%E9%93%BE%E8%A1%A8/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          单链表
+        
+      </div>
+    </a>
   
   
     <a href="/2025/10/11/%E7%BC%96%E8%AF%91%E5%99%A81/" id="article-nav-older" class="article-nav-link-wrap">
@@ -545,6 +312,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2025/11/23/%E5%8D%95%E9%93%BE%E8%A1%A8/">单链表</a>
+          </li>
         
           <li>
             <a href="/2025/11/04/%E7%BC%96%E8%AF%91%E5%99%A82/">解释器2</a>
